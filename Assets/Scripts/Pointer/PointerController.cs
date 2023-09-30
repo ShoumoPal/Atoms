@@ -4,6 +4,6 @@ public class PointerController : MonoBehaviour
 {
     private void Update()
     {
-        transform.position = MouseEvents.Instance.InvokeOnMouseClickedPosition();
+        transform.position = EventService.Instance.InvokeOnMouseClickedPosition();
     }
 }

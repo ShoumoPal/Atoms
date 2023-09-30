@@ -1,28 +1,40 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum AtomType
+{
+    PLAYER,
+    ENEMY
+}
+
 public class AtomController : MonoBehaviour
 {
-    private Rigidbody rb;
     [SerializeField] private Transform _camTransform;
     [SerializeField] private float _speed;
-    private Vector3 offset;
     private NavMeshAgent _agent;
-    [SerializeField] private LayerMask _playerLayer;
+    public LayerMask _playerLayer;
     private Vector3 hitPoint;
+    [SerializeField] private AtomType _atomType;
 
     private void Start()
     {
-        MouseEvents.Instance.OnMouseClickedPosition += CurrentMouseClickPosition;
+        EventService.Instance.OnMouseClickedPosition += CurrentMouseClickPosition;
 
-        rb = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         hitPoint = transform.position;
     }
 
     private void Update()
     {
-        _agent.SetDestination(CurrentMouseClickPosition());
+        if(_atomType == AtomType.PLAYER)
+            _agent.SetDestination(CurrentMouseClickPosition());
+        else if(_atomType == AtomType.ENEMY)
+            _agent.SetDestination(PlayerService.Instance._player.transform.position);
+    }
+
+    public void SetAtomType(AtomType atomType)
+    {
+        _atomType = atomType;
     }
 
     private Vector3 CurrentMouseClickPosition()
@@ -41,6 +53,6 @@ public class AtomController : MonoBehaviour
 
     private void OnDisable()
     {
-        MouseEvents.Instance.OnMouseClickedPosition -= CurrentMouseClickPosition;
+        EventService.Instance.OnMouseClickedPosition -= CurrentMouseClickPosition;
     }
 }
