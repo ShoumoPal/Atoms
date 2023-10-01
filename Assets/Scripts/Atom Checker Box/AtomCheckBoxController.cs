@@ -8,8 +8,13 @@ public class AtomCheckBoxController : MonoBehaviour
     private int _numberOfAtoms;
     private bool hasSatisfied;
 
+    private void OnEnable()
+    {
+        EventService.Instance.HasSatisfiedAtomCondition += HasSatisfiedCondition;
+    }
     private void Start()
     {
+        
         _numberOfAtoms = _atomsRequired;
         hasSatisfied = false;
         DisplayNumberOfAtoms();
@@ -31,6 +36,11 @@ public class AtomCheckBoxController : MonoBehaviour
         }    
     }
 
+    private bool HasSatisfiedCondition()
+    {
+        return hasSatisfied;
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.GetComponent<AtomController>() != null && !hasSatisfied)
@@ -50,5 +60,10 @@ public class AtomCheckBoxController : MonoBehaviour
     {
         Debug.Log("Change color called");
         gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+    }
+
+    private void OnDisable()
+    {
+        EventService.Instance.HasSatisfiedAtomCondition -= HasSatisfiedCondition;
     }
 }
