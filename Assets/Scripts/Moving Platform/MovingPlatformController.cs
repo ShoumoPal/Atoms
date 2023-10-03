@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using Unity.AI.Navigation;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MovingPlatformController : MonoBehaviour
 {
@@ -19,13 +20,13 @@ public class MovingPlatformController : MonoBehaviour
         if(EventService.Instance.InvokeHasSatisfiedAtomCondition() && !isRunning)
         {
             isRunning = true;
-            StartCoroutine(MovePlatform());
+            StartCoroutine(Move(gameObject.transform));
         }
     }
 
-    IEnumerator MovePlatform()
+    IEnumerator Move(Transform obj)
     {
-        transform.DOMoveY(0.4f, 5f, false).SetEase(Ease.InOutSine);
+        obj.DOMoveY(0.4f, 5f, false).SetEase(Ease.InOutSine);
         yield return new WaitForSeconds(5f);
         _surface.BuildNavMesh();
     }
