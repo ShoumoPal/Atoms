@@ -1,24 +1,32 @@
-using System;
 using UnityEngine;
 
 public enum AtomState
 {
     IDLE,
-    ACTIVATED
+    ACTIVATED,
+    CHASE
 }
 
 public class AtomStateMachine : MonoBehaviour
 {
     private AtomBaseState _currentAtomState = null;
 
+    public Material _enemyMat;
+
     private AtomIdleState _idleState;
     private AtomActivatedState _activatedState;
+    private AtomChaseState _chaseState;
 
     private void Start()
     {
         _idleState = new AtomIdleState(this);
         _activatedState = new AtomActivatedState(this);
-        ChangeAtomState(AtomState.IDLE);
+        _chaseState = new AtomChaseState(this);
+
+        if (gameObject.GetComponent<AtomController>()?.GetAtomType() == AtomType.PLAYER)
+            ChangeAtomState(AtomState.ACTIVATED);
+        else
+            ChangeAtomState(AtomState.IDLE);
     }
 
     private void Update()
@@ -47,6 +55,8 @@ public class AtomStateMachine : MonoBehaviour
                 return _idleState;
             case AtomState.ACTIVATED:
                 return _activatedState;
+            case AtomState.CHASE:
+                return _chaseState;
         }
         return null;
     }

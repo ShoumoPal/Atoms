@@ -25,7 +25,7 @@ public class MovingPlatformController : MonoBehaviour
 
     IEnumerator MovePlatform()
     {
-        transform.DOMoveY(0f, 5f, false).SetEase(Ease.InOutSine);
+        transform.DOMoveY(0.4f, 5f, false).SetEase(Ease.InOutSine);
         yield return new WaitForSeconds(5f);
         _surface.BuildNavMesh();
     }

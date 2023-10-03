@@ -8,13 +8,9 @@ public class AtomCheckBoxController : MonoBehaviour
     private int _numberOfAtoms;
     private bool hasSatisfied;
 
-    private void OnEnable()
-    {
-        EventService.Instance.HasSatisfiedAtomCondition += HasSatisfiedCondition;
-    }
     private void Start()
     {
-        
+        EventService.Instance.HasSatisfiedAtomCondition += HasSatisfiedCondition;
         _numberOfAtoms = _atomsRequired;
         hasSatisfied = false;
         DisplayNumberOfAtoms();
