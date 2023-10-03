@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Surface
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PostProcessing
+  - Outer Shell
+  - Enemy
   - 
   - 
   - 
