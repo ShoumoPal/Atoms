@@ -23,10 +23,7 @@ public class AtomStateMachine : MonoBehaviour
         _activatedState = new AtomActivatedState(this);
         _chaseState = new AtomChaseState(this);
 
-        if (gameObject.GetComponent<AtomController>()?.GetAtomType() == AtomType.PLAYER)
-            ChangeAtomState(AtomState.ACTIVATED);
-        else
-            ChangeAtomState(AtomState.IDLE);
+        ChangeAtomState(AtomState.IDLE);
     }
 
     private void Update()

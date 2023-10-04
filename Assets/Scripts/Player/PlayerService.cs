@@ -7,14 +7,14 @@ public class PlayerService : GenericLazySingleton<PlayerService>
 {
     public AtomController _playerPrefab;
 
-    public List<AtomController> _players;
+    public List<AtomController> _players = new List<AtomController>();
 
     [SerializeField] private GameObject _pointer;
     [SerializeField] private CinemachineVirtualCamera _camera;
 
     private void OnEnable()
     {
-        _players.Add(Instantiate<AtomController>(_playerPrefab, LevelManagerService.Instance.GetSpawnPointFromLevelName(SceneManager.GetActiveScene().name), Quaternion.identity));
+        Instantiate(_playerPrefab, LevelManagerService.Instance.GetSpawnPointFromLevelName(SceneManager.GetActiveScene().name), Quaternion.identity);
         Instantiate(_pointer, LevelManagerService.Instance.GetSpawnPointFromLevelName(SceneManager.GetActiveScene().name), Quaternion.identity);
         CameraFollowPlayer();
     }
@@ -28,6 +28,11 @@ public class PlayerService : GenericLazySingleton<PlayerService>
     public void RemoveAtomFromList(AtomController _atom)
     {
         _players.Remove(_atom);
+        Debug.Log("Removed from list, new count: " + _players.Count);
+        if (!ArePlayersPresent())
+        {
+            Debug.Log("Failed");
+        }
     }
 
     public bool ArePlayersPresent()

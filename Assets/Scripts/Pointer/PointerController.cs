@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PointerController : MonoBehaviour
 {
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.position = EventService.Instance.InvokeOnMouseClickedPosition();
+        if(PlayerService.Instance.ArePlayersPresent())
+            transform.position = EventService.Instance.InvokeOnMouseClickedPosition();
     }
 }

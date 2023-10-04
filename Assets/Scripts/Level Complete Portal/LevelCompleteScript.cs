@@ -6,6 +6,7 @@ public class LevelCompleteScript : MonoBehaviour
     {
         if (other.gameObject.GetComponent<AtomController>())
         {
+
             Debug.Log("Level Complete");
         }
     }

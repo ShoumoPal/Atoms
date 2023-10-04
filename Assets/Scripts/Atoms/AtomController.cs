@@ -1,7 +1,6 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
 
 public enum AtomType
 {
@@ -13,54 +12,25 @@ public enum AtomType
 public class AtomController : MonoBehaviour, IDamagable
 {
     public Material _enemyMat;
-    [SerializeField] private int _health;
+    public int _maxHealth;
+
+    private int _health;
     [SerializeField] private TextMeshPro _healthText;
     [SerializeField] private Transform _camTransform;
     [SerializeField] private float _speed;
-    [SerializeField] private NavMeshAgent _agent;
+    
     [SerializeField] private ParticleSystem _sparks;
     public LayerMask _playerLayer;
-    private Vector3 hitPoint;
+    
     [SerializeField] private AtomType _atomType;
+
+    private AtomStateMachine _atomSM;
 
     private void Start()
     {
-        EventService.Instance.OnMouseClickedPosition += CurrentMouseClickPosition;
-        hitPoint = transform.position;
-        
-        _agent = null;
-
+        _health = _maxHealth;
+        _atomSM = GetComponent<AtomStateMachine>();
         ShowText();
-    }
-
-    private void FixedUpdate()
-    {
-        //if (Input.GetMouseButton(0))
-        //{
-        if (_agent == null && gameObject.GetComponent<NavMeshAgent>())
-        {
-            _agent = gameObject.GetComponent<NavMeshAgent>();
-        }
-
-        if(_atomType != AtomType.ENEMY)
-        {
-            if (_agent.remainingDistance < 2f)
-            {
-                _agent.isStopped = true;
-                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            }
-            else
-            {
-                _agent.isStopped = false;
-            }
-
-            if ((_atomType == AtomType.FRIENDLY || _atomType == AtomType.PLAYER) && _agent != null && Input.GetMouseButton(0))
-            {
-                //_agent.isStopped = false;
-                _agent.SetDestination(CurrentMouseClickPosition());
-            }
-        }      
-        //}
     }
 
     private void LateUpdate()
@@ -70,68 +40,43 @@ public class AtomController : MonoBehaviour, IDamagable
 
     public void SetAtomType(AtomType atomType)
     {
-        _atomType = atomType;
-        _health = 10;
+        _health = _maxHealth;
 
         if (atomType == AtomType.FRIENDLY)
         {
-            if (_agent == null)
-                _agent = gameObject.AddComponent<NavMeshAgent>();
-            else
-                _agent = gameObject.GetComponent<NavMeshAgent>();
+            _atomType = atomType;
+            PlayerService.Instance.AddAtomToList(this);
+            PlayerService.Instance.CameraFollowPlayer();
 
-            if(_atomType != AtomType.PLAYER)
-                PlayerService.Instance.AddAtomToList(this);
-
-            Debug.Log(_agent);
-            // Setting Navmesh parameters
-            _agent.acceleration = 100f;
-            _agent.angularSpeed = 120f;
-            _agent.speed = 30f;
-            _agent.stoppingDistance = 0.5f;
-            _agent.radius = 0.5f;
+            // Setting layer and text object
+            SetHealthTextValue();
+            ShowText();
+            _playerLayer = PlayerService.Instance._players[0].GetComponent<AtomController>()._playerLayer;
 
             // Changing material
             gameObject.GetComponent<MeshRenderer>().material = PlayerService.Instance._players[0].GetComponent<MeshRenderer>().material;
         }
         if(atomType == AtomType.ENEMY)
         {
+            _atomType = atomType;
             PlayerService.Instance.RemoveAtomFromList(this);
-
-            // Setting Navmesh parameters
-            _agent.acceleration = 100f;
-            _agent.angularSpeed = 80f;
-            _agent.speed = 50f;
-            _agent.stoppingDistance = 0.5f;
-            _agent.radius = 0.5f;
+            PlayerService.Instance.CameraFollowPlayer();
 
             // Changing state
-            gameObject.GetComponent<AtomStateMachine>().ChangeAtomState(AtomState.CHASE);
+            _atomSM.ChangeAtomState(AtomState.CHASE);
 
             // Changing material
             gameObject.GetComponent<MeshRenderer>().material = _enemyMat;
 
-            PlayerService.Instance.CameraFollowPlayer();
+            ShowText();
         }
+
+        
     }
 
     public AtomType GetAtomType()
     {
         return _atomType;
-    }
-
-    private Vector3 CurrentMouseClickPosition()
-    {
-        RaycastHit hit;
-
-        Vector3 mouse = Input.mousePosition;
-        Ray castPoint = Camera.main.ScreenPointToRay(mouse);
-        
-        if(Physics.Raycast(castPoint, out hit, Mathf.Infinity, ~_playerLayer) && Input.GetMouseButton(0))
-        {
-            hitPoint = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-        }
-        return hitPoint;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -140,10 +85,12 @@ public class AtomController : MonoBehaviour, IDamagable
         {
             if(collision.gameObject.GetComponent<AtomController>()._atomType != AtomType.ENEMY)
             {
-                Debug.Log("Collided with : " + collision.gameObject.name);
-                SoundManager.Instance.PlayFX1(SoundType.Connect);
+                SoundManager.Instance.Play(SourceType.FX1, SoundType.Connect);
                 // Spawning from pool
-                ObjectPoolManager.SpawnObject(_sparks.gameObject, collision.GetContact(0).point, Quaternion.identity);
+                if(_sparks != null)
+                {
+                    ObjectPoolManager.SpawnObject(_sparks.gameObject, collision.GetContact(0).point, Quaternion.identity);
+                }
                 this.TakeDamage();
                 collision.gameObject.GetComponent<AtomController>().TakeDamage();
             }
@@ -160,9 +107,9 @@ public class AtomController : MonoBehaviour, IDamagable
         _health = health;
     }
 
-    public int GetHealthValue()
+    public void SetMaxHealthValue(int maxHealth)
     {
-        return _health;
+        _maxHealth = maxHealth;
     }
 
     public void SetHealthTextValue()
@@ -174,27 +121,28 @@ public class AtomController : MonoBehaviour, IDamagable
     {
         _healthText.text = _health.ToString();
         _healthText.color = new Color(_healthText.color.r, _healthText.color.g, _healthText.color.b, 1f);
-        _healthText.DOFade(0f, 2f);
-    }
-
-    private void OnDisable()
-    {
-        EventService.Instance.OnMouseClickedPosition -= CurrentMouseClickPosition;
+        _healthText.DOFade(0f, 1.5f);
     }
 
     public void TakeDamage()
     {
+        Debug.Log("Called for gameobject: " + gameObject.name + " with Health: " + _health);
         _health--;
-        if(_health <= 0)
+        ShowText();
+        if (_health <= 0)
         {
             if(_atomType == AtomType.FRIENDLY)
+            {
                 SetAtomType(AtomType.ENEMY);
-            if (_atomType == AtomType.ENEMY)
-                SetAtomType(AtomType.FRIENDLY);
+            }    
+            else if (_atomType == AtomType.ENEMY)
+            {
+                _atomSM.ChangeAtomState(AtomState.ACTIVATED);
+            }    
         }
         else
         {
-            ShowText();
+            
         }        
     }
 }

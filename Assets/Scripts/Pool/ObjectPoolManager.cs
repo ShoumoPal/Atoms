@@ -24,6 +24,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("Taking from pool");
             spawnableObj.transform.position = spawnPos;
             spawnableObj.transform.rotation = spawnRotation;
             pool.InActiveObjects.Remove(spawnableObj);
