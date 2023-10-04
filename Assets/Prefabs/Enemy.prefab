@@ -299,6 +299,7 @@ MonoBehaviour:
   _camTransform: {fileID: 0}
   _speed: 50
   _agent: {fileID: 0}
+  _sparks: {fileID: 1169282371123701792, guid: a7343b8c9c11dfc42b811adbeb8759e4, type: 3}
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64

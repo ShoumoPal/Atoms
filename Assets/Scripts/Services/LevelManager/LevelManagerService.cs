@@ -23,6 +23,7 @@ public class LevelManagerService : GenericMonoSingleton<LevelManagerService>
 
     private void Start()
     {
+        SoundManager.Instance.PlayBG1(SoundType.Background1);
         SetLevelStatus(Levels[0].Name, LevelStatus.UNLOCKED);
     }
 

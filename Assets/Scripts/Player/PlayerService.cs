@@ -15,7 +15,7 @@ public class PlayerService : GenericLazySingleton<PlayerService>
     private void OnEnable()
     {
         _players.Add(Instantiate<AtomController>(_playerPrefab, LevelManagerService.Instance.GetSpawnPointFromLevelName(SceneManager.GetActiveScene().name), Quaternion.identity));
-        Instantiate(_pointer, new Vector3(-15f, 0f, 56f), Quaternion.identity);
+        Instantiate(_pointer, LevelManagerService.Instance.GetSpawnPointFromLevelName(SceneManager.GetActiveScene().name), Quaternion.identity);
         CameraFollowPlayer();
     }
 

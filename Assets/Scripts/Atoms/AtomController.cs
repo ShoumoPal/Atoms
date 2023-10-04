@@ -18,6 +18,7 @@ public class AtomController : MonoBehaviour, IDamagable
     [SerializeField] private Transform _camTransform;
     [SerializeField] private float _speed;
     [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private ParticleSystem _sparks;
     public LayerMask _playerLayer;
     private Vector3 hitPoint;
     [SerializeField] private AtomType _atomType;
@@ -48,10 +49,14 @@ public class AtomController : MonoBehaviour, IDamagable
                 _agent.isStopped = true;
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
+            else
+            {
+                _agent.isStopped = false;
+            }
 
             if ((_atomType == AtomType.FRIENDLY || _atomType == AtomType.PLAYER) && _agent != null && Input.GetMouseButton(0))
             {
-                _agent.isStopped = false;
+                //_agent.isStopped = false;
                 _agent.SetDestination(CurrentMouseClickPosition());
             }
         }      
@@ -93,12 +98,18 @@ public class AtomController : MonoBehaviour, IDamagable
         {
             PlayerService.Instance.RemoveAtomFromList(this);
 
+            // Setting Navmesh parameters
+            _agent.acceleration = 100f;
+            _agent.angularSpeed = 80f;
+            _agent.speed = 50f;
+            _agent.stoppingDistance = 0.5f;
+            _agent.radius = 0.5f;
+
             // Changing state
             gameObject.GetComponent<AtomStateMachine>().ChangeAtomState(AtomState.CHASE);
 
             // Changing material
             gameObject.GetComponent<MeshRenderer>().material = _enemyMat;
-            gameObject.GetComponent<AtomStateMachine>().ChangeAtomState(AtomState.CHASE);
 
             PlayerService.Instance.CameraFollowPlayer();
         }
@@ -130,6 +141,9 @@ public class AtomController : MonoBehaviour, IDamagable
             if(collision.gameObject.GetComponent<AtomController>()._atomType != AtomType.ENEMY)
             {
                 Debug.Log("Collided with : " + collision.gameObject.name);
+                SoundManager.Instance.PlayFX1(SoundType.Connect);
+                // Spawning from pool
+                ObjectPoolManager.SpawnObject(_sparks.gameObject, collision.GetContact(0).point, Quaternion.identity);
                 this.TakeDamage();
                 collision.gameObject.GetComponent<AtomController>().TakeDamage();
             }

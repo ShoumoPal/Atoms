@@ -25,21 +25,25 @@ public class LobbyService : MonoBehaviour
 
     private void BackToLobby()
     {
+        SoundManager.Instance.PlayFX1(SoundType.Button_Click);
         StartCoroutine(FadeOutPanel());
     }
 
     private void ShowLevelSelectionMenu()
     {
+        SoundManager.Instance.PlayFX1(SoundType.Button_Click);
         FadeInPanel();
     }
 
     private void QuitGame()
     {
+        SoundManager.Instance.PlayFX1(SoundType.Button_Click);
         Application.Quit();
     }
 
     private void PlayLevelOne()
     {
+        SoundManager.Instance.PlayFX1(SoundType.Button_Click);
         LevelManagerService.Instance.LoadScene(LevelManagerService.Instance.Levels[0].Name);
     }
 

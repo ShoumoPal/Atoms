@@ -25,6 +25,7 @@ public class AtomIdleState : AtomBaseState
 
         else if(Vector3.Distance(PlayerService.Instance._players[0].transform.position, _atomSM.transform.position) < 7.5f)
         {
+            SoundManager.Instance.PlayFX1(SoundType.Connect);
             _atomSM.ChangeAtomState(AtomState.ACTIVATED);
         }
     }
