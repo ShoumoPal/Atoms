@@ -47,6 +47,14 @@ public class LevelManagerService : GenericMonoSingleton<LevelManagerService>
         SetLevelStatus(nextLevelName, LevelStatus.UNLOCKED);
     }
 
+    public void LoadNextScene()
+    {
+        int nextSceneIndex = (SceneManager.GetActiveScene().buildIndex + 1) % (Levels.Length + 1);
+        string nextLevelName = GetLevelNameFromIndex(nextSceneIndex);
+
+        LoadScene(nextLevelName);
+    }
+
     public Vector3 GetSpawnPointFromLevelName(string name)
     {
         Level level = Array.Find(Levels, i => i.Name == name);

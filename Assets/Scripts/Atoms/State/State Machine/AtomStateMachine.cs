@@ -12,6 +12,7 @@ public class AtomStateMachine : MonoBehaviour
     private AtomBaseState _currentAtomState = null;
 
     public Material _enemyMat;
+    public LayerMask _bodyLayerMask;
 
     private AtomIdleState _idleState;
     private AtomActivatedState _activatedState;

@@ -25,7 +25,7 @@ public class AtomCheckBoxController : MonoBehaviour
             DisplayNumberOfAtoms();
         }
 
-        if (_numberOfAtoms == 0) // Atom checker true
+        if (_numberOfAtoms == 0 && !hasSatisfied) // Atom checker true
         {
             SoundManager.Instance.Play(SourceType.FX2, SoundType.Level_Complete);
             ChangeColour();

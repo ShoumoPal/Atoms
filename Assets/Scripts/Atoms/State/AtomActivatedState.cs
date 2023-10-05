@@ -68,7 +68,7 @@ public class AtomActivatedState : AtomBaseState
         Vector3 mouse = Input.mousePosition;
         Ray castPoint = Camera.main.ScreenPointToRay(mouse);
 
-        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, ~(_atomSM.GetComponent<AtomController>()._playerLayer)) && Input.GetMouseButton(0))
+        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, ~(_atomSM._bodyLayerMask)) && Input.GetMouseButton(0))
         {
             hitPoint = new Vector3(hit.point.x, hit.point.y, hit.point.z);
         }

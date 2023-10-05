@@ -5292,7 +5292,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Levels:
   - Name: Level 1
-    StartPosition: {x: -15, y: 0.5, z: 56}
+    StartPosition: {x: -76, y: 0.5, z: 3.5}
+  - Name: Level 2
+    StartPosition: {x: 3, y: 0.5, z: -27}
 --- !u!4 &381361688
 Transform:
   m_ObjectHideFlags: 0
@@ -5872,8 +5874,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5896,7 +5898,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5997,9 +5999,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'PLay
-
-'
+  m_text: Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f93e8003a0395904480697f4a1132109, type: 2}
   m_sharedMaterial: {fileID: -2015534247440174703, guid: f93e8003a0395904480697f4a1132109,
@@ -6009,8 +6009,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6033,7 +6033,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -6807,7 +6807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3f79d167753754882f0c3ac89a7741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelName: 
+  _levelName: Level 2
 --- !u!1 &716210867
 GameObject:
   m_ObjectHideFlags: 0
@@ -7203,8 +7203,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7227,7 +7227,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -7984,7 +7984,7 @@ MonoBehaviour:
     Volume: 0.3
   - Type: 3
     Clip: {fileID: 8300000, guid: b3771c0e0954b294198a10a34706ac94, type: 3}
-    Volume: 0.3
+    Volume: 0.1
   _sources:
   - Type: 0
     AudioSource: {fileID: 1577162970}

@@ -126,7 +126,6 @@ public class AtomController : MonoBehaviour, IDamagable
 
     public void TakeDamage()
     {
-        Debug.Log("Called for gameobject: " + gameObject.name + " with Health: " + _health);
         _health--;
         ShowText();
         if (_health <= 0)
