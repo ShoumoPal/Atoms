@@ -34,7 +34,7 @@ public class AtomStateMachine : MonoBehaviour
 
     public void ChangeAtomState(AtomState state)
     {
-        Debug.Log("Changing state to: " + state);
+        Debug.Log("Changing state to: " + state + "For object: " + gameObject.name);
         AtomBaseState newState = GetStateFromEnum(state);
 
         if (_currentAtomState == newState)

@@ -23,6 +23,7 @@ public class AtomChaseState : AtomBaseState
     {
         if(PlayerService.Instance.ArePlayersPresent())
         {
+            Debug.Log("Chasing for gameobject: " + _atomSM.gameObject.name + " and chasing: " + PlayerService.Instance._players[0].gameObject.name + " and agent: " + _agent);
             _agent.SetDestination(PlayerService.Instance._players[0].transform.position);
         }
     }

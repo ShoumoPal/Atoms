@@ -121,7 +121,7 @@ public class AtomController : MonoBehaviour, IDamagable
     {
         _healthText.text = _health.ToString();
         _healthText.color = new Color(_healthText.color.r, _healthText.color.g, _healthText.color.b, 1f);
-        _healthText.DOFade(0f, 1.5f);
+        _healthText.DOFade(0f, 1.5f).Restart();
     }
 
     public void TakeDamage()
@@ -138,10 +138,6 @@ public class AtomController : MonoBehaviour, IDamagable
             {
                 _atomSM.ChangeAtomState(AtomState.ACTIVATED);
             }    
-        }
-        else
-        {
-            
-        }        
+        }       
     }
 }

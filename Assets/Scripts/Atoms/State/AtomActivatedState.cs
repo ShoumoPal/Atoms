@@ -57,7 +57,7 @@ public class AtomActivatedState : AtomBaseState
             _agent.isStopped = false;
         }
 
-        if(PlayerService.Instance.ArePlayersPresent())
+        if(PlayerService.Instance.ArePlayersPresent() && Input.GetMouseButton(0))
             _agent.SetDestination(CurrentMouseClickPosition());
     }
 
@@ -77,6 +77,7 @@ public class AtomActivatedState : AtomBaseState
 
     public override void OnStateExit()
     {
+        _agent.ResetPath();
         EventService.Instance.OnMouseClickedPosition -= CurrentMouseClickPosition;
     }
 }
