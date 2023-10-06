@@ -293,11 +293,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyMat: {fileID: 2100000, guid: c9e806ac0b3e346448e4e4d4d43a32ce, type: 2}
-  _health: 10
+  _maxHealth: 10
   _healthText: {fileID: 6305749128518665930}
   _camTransform: {fileID: 0}
   _speed: 50
-  _agent: {fileID: 0}
+  _sparks: {fileID: 0}
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -342,3 +342,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyMat: {fileID: 2100000, guid: c9e806ac0b3e346448e4e4d4d43a32ce, type: 2}
+  _bodyLayerMask:
+    serializedVersion: 2
+    m_Bits: 256

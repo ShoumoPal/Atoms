@@ -9,17 +9,19 @@ public class CrossfadeService : GenericMonoSingleton<CrossfadeService>
 
     public float fadeTime;
 
+    public bool IsSceneCovered()
+    {
+        return _imageCG.alpha == 1;
+    }
 
     public void FadeIn(string text)
     {
         _levelText.text = text;
-        _imageCG.alpha = 0;
         _imageCG.DOFade(1f, fadeTime);
     }
 
     public void FadeOut()
     {
-        _imageCG.alpha = 1;
         _imageCG.DOFade(0f, fadeTime);
     }
 }

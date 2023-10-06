@@ -23,6 +23,7 @@ public class LevelManagerService : GenericMonoSingleton<LevelManagerService>
 
     private void Start()
     {
+        SoundManager.Instance.Play(SourceType.BG1, SoundType.Background1);
         SetLevelStatus(Levels[0].Name, LevelStatus.UNLOCKED);
     }
 
@@ -44,6 +45,20 @@ public class LevelManagerService : GenericMonoSingleton<LevelManagerService>
         string nextLevelName = GetLevelNameFromIndex(nextSceneIndex);
 
         SetLevelStatus(nextLevelName, LevelStatus.UNLOCKED);
+        Debug.Log("Set to unlocked");
+    }
+
+    public void ReloadScene()
+    {
+        StartCoroutine(LoadSceneWithTransition(SceneManager.GetActiveScene().name));
+    }
+
+    public void LoadNextScene()
+    {
+        int nextSceneIndex = (SceneManager.GetActiveScene().buildIndex + 1) % (Levels.Length + 1);
+        string nextLevelName = GetLevelNameFromIndex(nextSceneIndex);
+
+        LoadScene(nextLevelName);
     }
 
     public Vector3 GetSpawnPointFromLevelName(string name)
@@ -71,10 +86,15 @@ public class LevelManagerService : GenericMonoSingleton<LevelManagerService>
         CrossfadeService.Instance.FadeIn(levelName);
         yield return new WaitForSeconds(CrossfadeService.Instance.fadeTime);
 
-        SceneManager.LoadScene(levelName);
-        yield return new WaitForSeconds(CrossfadeService.Instance.fadeTime);
+        if(CrossfadeService.Instance.IsSceneCovered())
+            SceneManager.LoadScene(levelName);
 
-        CrossfadeService.Instance.FadeOut();
-        yield return new WaitForSeconds(CrossfadeService.Instance.fadeTime);
+        yield return new WaitForSeconds(1f);
+
+        if (SceneManager.GetActiveScene().isLoaded)
+        {
+            CrossfadeService.Instance.FadeOut();
+            yield return new WaitForSeconds(CrossfadeService.Instance.fadeTime);
+        }
     }
 }

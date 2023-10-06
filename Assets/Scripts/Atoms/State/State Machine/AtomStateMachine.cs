@@ -12,6 +12,7 @@ public class AtomStateMachine : MonoBehaviour
     private AtomBaseState _currentAtomState = null;
 
     public Material _enemyMat;
+    public LayerMask _bodyLayerMask;
 
     private AtomIdleState _idleState;
     private AtomActivatedState _activatedState;
@@ -23,10 +24,7 @@ public class AtomStateMachine : MonoBehaviour
         _activatedState = new AtomActivatedState(this);
         _chaseState = new AtomChaseState(this);
 
-        if (gameObject.GetComponent<AtomController>()?.GetAtomType() == AtomType.PLAYER)
-            ChangeAtomState(AtomState.ACTIVATED);
-        else
-            ChangeAtomState(AtomState.IDLE);
+        ChangeAtomState(AtomState.IDLE);
     }
 
     private void Update()
@@ -36,7 +34,7 @@ public class AtomStateMachine : MonoBehaviour
 
     public void ChangeAtomState(AtomState state)
     {
-        Debug.Log("Changing state to: " + state);
+        Debug.Log("Changing state to: " + state + "For object: " + gameObject.name);
         AtomBaseState newState = GetStateFromEnum(state);
 
         if (_currentAtomState == newState)
