@@ -4,7 +4,7 @@
 <br>
 Play it here : <a href="https://shoumopal.itch.io/atoms">Play</a>
 <br><br>
-Watch the demo : <a href="">Demo</a>
+Watch the demo : <a href="https://www.loom.com/share/6627f5c87d634bab9ed9588f67175dc8?sid=86b0d230-4546-4327-aeaa-6247047332b3">Demo</a>
 
 <hr>
 
