@@ -1,6 +1,8 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class LobbyService : MonoBehaviour
@@ -9,11 +11,21 @@ public class LobbyService : MonoBehaviour
     [SerializeField] private Button _quitButton;
     [SerializeField] private Button _levelButton;
     [SerializeField] private Button _backButton;
+    [SerializeField] private Button _volumeButton;
+
+    [SerializeField] private Slider _volumeSlider;
+
+    [SerializeField] private AudioMixer _audioMixer;
+
+    [SerializeField] private CanvasGroup _backGroundObjects;
 
     [SerializeField] private CanvasGroup _levelSelectionCG;
     [SerializeField] private RectTransform _levelSelectionRT;
+    [SerializeField] private CanvasGroup _sliderImageCG;
 
     [SerializeField] private float _fadeSpeed;
+
+    private bool _isVolumeSliderShown;
 
     private void Awake()
     {
@@ -21,16 +33,42 @@ public class LobbyService : MonoBehaviour
         _quitButton.onClick.AddListener(QuitGame);
         _levelButton.onClick.AddListener(ShowLevelSelectionMenu);
         _backButton.onClick.AddListener(BackToLobby);
+        _volumeButton.onClick.AddListener(ShowVolumeBar);
+
+        _volumeSlider.onValueChanged.AddListener(ChangeValue);
+
+
+        _isVolumeSliderShown = false;
+    }
+
+    private void ChangeValue(float value)
+    {
+        _audioMixer.SetFloat("Volume", Mathf.Log10(value / 100) * 20);
+    }
+
+    private void ShowVolumeBar()
+    {
+        SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
+        if (_isVolumeSliderShown)
+        {
+            SliderFadeOut();
+        }
+        else
+        {
+            SliderFadeIn();
+        }
     }
 
     private void BackToLobby()
     {
+        _backGroundObjects.blocksRaycasts = true;
         SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
         StartCoroutine(FadeOutPanel());
     }
 
     private void ShowLevelSelectionMenu()
     {
+        _backGroundObjects.blocksRaycasts = false;
         SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
         FadeInPanel();
     }
@@ -66,5 +104,19 @@ public class LobbyService : MonoBehaviour
         yield return new WaitForSeconds(_fadeSpeed);
 
         _levelSelectionCG.gameObject.SetActive(false);
+    }
+
+    private void SliderFadeIn()
+    {
+        _sliderImageCG.gameObject.SetActive(true);
+        _sliderImageCG.DOFade(1f, 0.5f);
+        _isVolumeSliderShown = true;
+    }
+
+    private void SliderFadeOut()
+    {
+        _sliderImageCG.DOFade(0f, 0.5f);
+        _isVolumeSliderShown = false;
+        _sliderImageCG.gameObject.SetActive(false);
     }
 }

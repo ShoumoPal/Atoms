@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class UIService : GenericLazySingleton<UIService>
     [SerializeField] private CanvasGroup _pauseMenuCG;
     [SerializeField] private RectTransform _gameOverMenuRT;
     [SerializeField] private CanvasGroup _gameOverMenuCG;
+    [SerializeField] private TextMeshProUGUI _atomCountText;
 
     private bool isMenuRunning;
 
@@ -36,29 +38,39 @@ public class UIService : GenericLazySingleton<UIService>
         if (EventService.Instance.InvokeIsGameOver() && !isMenuRunning)
         {
             isMenuRunning = true;
+            SoundManager.Instance.Stop(SourceType.BG1);
+            SoundManager.Instance.Play(SourceType.FX1, SoundType.Game_Over);
             StartCoroutine(ShowMenu(_gameOverMenuCG, _gameOverMenuRT));
         }
+
+        _atomCountText.text = "Atoms : " + PlayerService.Instance._players.Count.ToString();
     }
 
     private void BackToLobby()
     {
         Time.timeScale = 1f;
+        SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
+        SoundManager.Instance.Play(SourceType.BG1, SoundType.Background1);
         LevelManagerService.Instance.LoadScene("Lobby");
     }
 
     private void ResumeGame()
     {
+        SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
         StartCoroutine(HideMenu(_pauseMenuCG, _pauseMenuRT));
     }
 
     private void PauseGame()
     {
+        SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
         StartCoroutine(ShowMenu(_pauseMenuCG, _pauseMenuRT));
     }
 
     private void RestartLevel()
     {
         Time.timeScale = 1f;
+        SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
+        SoundManager.Instance.Play(SourceType.BG1, SoundType.Background1);
         LevelManagerService.Instance.ReloadScene();
     }
 

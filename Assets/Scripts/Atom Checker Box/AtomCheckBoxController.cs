@@ -20,14 +20,16 @@ public class AtomCheckBoxController : MonoBehaviour
     {
         if(other.gameObject.GetComponent<AtomController>() != null && !hasSatisfied)
         {
-            Debug.Log("Entered");
-            _numberOfAtoms--;
-            DisplayNumberOfAtoms();
+            if(other.gameObject.GetComponent<AtomController>().GetAtomType() == AtomType.FRIENDLY)
+            {
+                _numberOfAtoms--;
+                DisplayNumberOfAtoms();
+            }
         }
 
         if (_numberOfAtoms == 0 && !hasSatisfied) // Atom checker true
         {
-            SoundManager.Instance.Play(SourceType.FX2, SoundType.Level_Complete);
+            SoundManager.Instance.Play(SourceType.FX2, SoundType.Pass_Sound);
             ChangeColour();
             hasSatisfied = true;
         }    
@@ -40,10 +42,12 @@ public class AtomCheckBoxController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<AtomController>() != null && !hasSatisfied)
+        if (other.gameObject.GetComponent<AtomController>() != null && other.gameObject.GetComponent<AtomController>().GetAtomType() == AtomType.FRIENDLY && !hasSatisfied)
         {
-            Debug.Log("Exited");
             _numberOfAtoms++;
+            if (_numberOfAtoms > _atomsRequired)
+                _numberOfAtoms = _atomsRequired;
+
             DisplayNumberOfAtoms();
         }
     }

@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System;
 using UnityEngine;
 
@@ -8,7 +7,9 @@ public enum SoundType
     Button_Click,
     Background1,
     Connect,
-    Level_Complete
+    Pass_Sound,
+    Level_Complete,
+    Game_Over
 }
 
 public enum SourceType
@@ -45,5 +46,11 @@ public class SoundManager : GenericMonoSingleton<SoundManager>
         source.AudioSource.clip = sound.Clip;
         source.AudioSource.volume = sound.Volume;
         source.AudioSource.Play();
+    }
+
+    public void Stop(SourceType sourceType)
+    {
+        Source source = Array.Find(_sources, i => i.Type == sourceType);
+        source.AudioSource.Stop();
     }
 }

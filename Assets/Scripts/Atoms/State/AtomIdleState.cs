@@ -20,7 +20,7 @@ public class AtomIdleState : AtomBaseState
 
     public override void Tick()
     {
-        if(_atomSM.GetComponent<AtomController>()?.GetAtomType() == AtomType.ENEMY && PlayerService.Instance.ArePlayersPresent())
+        if((_atomSM.GetComponent<AtomController>()?.GetAtomType() == AtomType.ENEMY || _atomSM.GetComponent<AtomController>()?.GetAtomType() == AtomType.BOSS) && PlayerService.Instance.ArePlayersPresent())
         {
             if(Vector3.Distance(PlayerService.Instance._players[0].transform.position, _atomSM.transform.position) < 10f)
                 _atomSM.ChangeAtomState(AtomState.CHASE);

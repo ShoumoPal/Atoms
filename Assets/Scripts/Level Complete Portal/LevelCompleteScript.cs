@@ -13,6 +13,7 @@ public class LevelCompleteScript : MonoBehaviour
     {
         if (other.gameObject.GetComponent<AtomController>() && !isTriggered)
         {
+            SoundManager.Instance.Play(SourceType.FX1, SoundType.Level_Complete);
             LevelManagerService.Instance.SetCurrentLevelComplete();
             LevelManagerService.Instance.LoadNextScene();
         }

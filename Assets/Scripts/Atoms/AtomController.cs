@@ -6,7 +6,8 @@ public enum AtomType
 {
     PLAYER,
     FRIENDLY,
-    ENEMY
+    ENEMY,
+    BOSS
 }
 
 public class AtomController : MonoBehaviour, IDamagable
@@ -40,10 +41,12 @@ public class AtomController : MonoBehaviour, IDamagable
 
     public void SetAtomType(AtomType atomType)
     {
-        _health = _maxHealth;
+        
 
         if (atomType == AtomType.FRIENDLY)
         {
+            _health = _maxHealth;
+
             _atomType = atomType;
             PlayerService.Instance.AddAtomToList(this);
             PlayerService.Instance.CameraFollowPlayer();
@@ -58,6 +61,8 @@ public class AtomController : MonoBehaviour, IDamagable
         }
         if(atomType == AtomType.ENEMY)
         {
+            _health = (int)(_maxHealth * 0.5);
+
             _atomType = atomType;
             PlayerService.Instance.RemoveAtomFromList(this);
             PlayerService.Instance.CameraFollowPlayer();
@@ -69,9 +74,7 @@ public class AtomController : MonoBehaviour, IDamagable
             gameObject.GetComponent<MeshRenderer>().material = _enemyMat;
 
             ShowText();
-        }
-
-        
+        }  
     }
 
     public AtomType GetAtomType()
@@ -81,7 +84,7 @@ public class AtomController : MonoBehaviour, IDamagable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(_atomType == AtomType.ENEMY && collision.gameObject.GetComponent<AtomController>())
+        if((_atomType == AtomType.ENEMY || _atomType == AtomType.BOSS) && collision.gameObject.GetComponent<AtomController>())
         {
             if(collision.gameObject.GetComponent<AtomController>()._atomType != AtomType.ENEMY)
             {
@@ -134,7 +137,7 @@ public class AtomController : MonoBehaviour, IDamagable
             {
                 SetAtomType(AtomType.ENEMY);
             }    
-            else if (_atomType == AtomType.ENEMY)
+            else if (_atomType == AtomType.ENEMY || _atomType == AtomType.BOSS)
             {
                 _atomSM.ChangeAtomState(AtomState.ACTIVATED);
             }    

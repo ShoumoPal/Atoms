@@ -26,6 +26,7 @@ public class LevelOpenService : MonoBehaviour
 
     private void OpenLevel()
     {
+        SoundManager.Instance.Play(SourceType.FX1, SoundType.Button_Click);
         LevelStatus status = LevelManagerService.Instance.GetLevelStatus(_levelName);
 
         switch (status)

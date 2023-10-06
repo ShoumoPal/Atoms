@@ -12,11 +12,22 @@ public class AtomChaseState : AtomBaseState
         _agent = _atomSM.gameObject.GetComponent<NavMeshAgent>();
 
         // Setting Navmesh parameters
-        _agent.acceleration = 100f;
-        _agent.angularSpeed = 80f;
-        _agent.speed = 50f;
-        _agent.stoppingDistance = 0.5f;
-        _agent.radius = 0.5f;
+        if(_atomSM.gameObject.GetComponent<AtomController>().GetAtomType() == AtomType.ENEMY)
+        {
+            _agent.acceleration = 100f;
+            _agent.angularSpeed = 80f;
+            _agent.speed = 50f;
+            _agent.stoppingDistance = 0.5f;
+            _agent.radius = 0.5f;
+        }
+        else if(_atomSM.gameObject.GetComponent<AtomController>().GetAtomType() == AtomType.BOSS)
+        {
+            _agent.acceleration = 50f;
+            _agent.angularSpeed = 80f;
+            _agent.speed = 20f;
+            _agent.stoppingDistance = 0.5f;
+            _agent.radius = 0.25f;
+        }
     }
 
     public override void Tick()

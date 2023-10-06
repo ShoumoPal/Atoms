@@ -30,7 +30,7 @@ public class WallMovementController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<AtomController>() != null)
+        if(collision.gameObject.GetComponent<AtomController>() != null && collision.gameObject.GetComponent<AtomController>().GetAtomType() == AtomType.FRIENDLY)
         {
             collision.gameObject.GetComponent<AtomController>().TakeDamage();
 
