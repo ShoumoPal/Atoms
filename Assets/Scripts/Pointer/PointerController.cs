@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PointerController : MonoBehaviour
 {
-    private void FixedUpdate()
+    private void Update()
     {
         if(PlayerService.Instance.ArePlayersPresent())
             transform.position = EventService.Instance.InvokeOnMouseClickedPosition();
