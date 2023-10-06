@@ -1,4 +1,5 @@
-using UnityEngine;
+
+/* Base state inherited by all atom states */
 
 public class AtomBaseState
 {

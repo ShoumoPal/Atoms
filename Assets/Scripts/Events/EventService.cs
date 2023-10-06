@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+/* Script containing some events in the game */
+
 public class EventService : GenericMonoSingleton<EventService>
 {
     public event Func<Vector3> OnMouseClickedPosition;

@@ -2,6 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 
+
+/* Activated state for atom */
+
 public class AtomActivatedState : AtomBaseState
 {
     private Vector3 hitPoint;

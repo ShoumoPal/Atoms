@@ -1,5 +1,7 @@
 using UnityEngine;
 
+/* Idle state for atoms which are not activated */
+
 public class AtomIdleState : AtomBaseState
 {
 

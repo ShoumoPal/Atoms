@@ -1,9 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
-using System;
 using Unity.AI.Navigation;
 using System.Collections;
-using System.Collections.Generic;
+
+/* Script used by the MOving platforms after the atom condition is met */
 
 public class MovingPlatformController : MonoBehaviour
 {
@@ -28,6 +28,6 @@ public class MovingPlatformController : MonoBehaviour
     {
         obj.DOMoveY(0f, 5f, false).SetEase(Ease.InOutSine);
         yield return new WaitForSeconds(5f);
-        _surface.BuildNavMesh();
+        _surface.BuildNavMesh(); // rebuild the navmesh to allow the atoms to move on the platform
     }
 }

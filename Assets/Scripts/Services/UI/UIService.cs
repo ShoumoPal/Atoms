@@ -1,9 +1,10 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+// Script which manages the menus in game
 
 public class UIService : GenericLazySingleton<UIService>
 {

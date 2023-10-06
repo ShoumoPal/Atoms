@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Public enum for Level status
+
 public enum LevelStatus
 {
     LOCKED,
@@ -10,12 +12,16 @@ public enum LevelStatus
     COMPLETED
 }
 
+// Class for levels
+
 [Serializable]
 public class Level
 {
     public string Name;
     public Vector3 StartPosition;
 }
+
+// Level Manager which manages all the levels throughout the game
 
 public class LevelManagerService : GenericMonoSingleton<LevelManagerService>
 {

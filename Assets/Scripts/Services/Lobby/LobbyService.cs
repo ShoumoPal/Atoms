@@ -1,9 +1,10 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+
+// Script to manage the lobby screen
 
 public class LobbyService : MonoBehaviour
 {

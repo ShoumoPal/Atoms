@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/* PLayerService singleton for initial player spawn */
+
 public class PlayerService : GenericLazySingleton<PlayerService>
 {
     public AtomController _playerPrefab;
 
-    public List<AtomController> _players = new List<AtomController>();
+    public List<AtomController> _players = new List<AtomController>(); // List of atoms maintained throughout the game
 
     [SerializeField] private GameObject _pointer;
     [SerializeField] private CinemachineVirtualCamera _camera;
@@ -58,7 +60,7 @@ public class PlayerService : GenericLazySingleton<PlayerService>
         return _camera;
     }
 
-    public void CameraFollowPlayer()
+    public void CameraFollowPlayer() // Called to make the Conemachine camera follow the Current present 
     {
         if(_players.Count > 0)
         {
