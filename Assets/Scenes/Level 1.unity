@@ -3767,7 +3767,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804094727}
   m_LocalRotation: {x: 0.24809423, y: 0.36278546, z: -0.100838885, w: 0.8925624}
-  m_LocalPosition: {x: 0, y: 0, z: 35.032944}
+  m_LocalPosition: {x: 0, y: 0, z: 52.072945}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3775,7 +3775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 31.067, y: 44.239, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -41.89789, y: 1.7}
+  m_AnchoredPosition: {x: -58.929035, y: 1.7}
   m_SizeDelta: {x: 50, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804094729
@@ -3811,7 +3811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Go this way -->
+  m_text: Pick all the atoms you can
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4cbcc0af22863a241a389f99f6cc166b, type: 2}
   m_sharedMaterial: {fileID: 1959654840386650352, guid: 4cbcc0af22863a241a389f99f6cc166b,
