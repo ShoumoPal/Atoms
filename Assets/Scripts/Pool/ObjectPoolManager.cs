@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/* General class for object pools in the game. Mainly used for the particle effects */
+
 public class ObjectPoolManager : MonoBehaviour
 {
     public static List<PooledObjectInfo> ObjectPools = new List<PooledObjectInfo>();

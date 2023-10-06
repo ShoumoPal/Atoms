@@ -1,5 +1,7 @@
 using UnityEngine;
 
+/* Script used by the level complete portal */
+
 public class LevelCompleteScript : MonoBehaviour
 {
     private bool isTriggered;
@@ -16,6 +18,7 @@ public class LevelCompleteScript : MonoBehaviour
             SoundManager.Instance.Play(SourceType.FX1, SoundType.Level_Complete);
             LevelManagerService.Instance.SetCurrentLevelComplete();
             LevelManagerService.Instance.LoadNextScene();
+            isTriggered = true;
         }
     }
 }

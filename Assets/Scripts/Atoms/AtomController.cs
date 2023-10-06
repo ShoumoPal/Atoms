@@ -2,6 +2,8 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
+/* Public enum for atom type */
+
 public enum AtomType
 {
     PLAYER,
@@ -9,6 +11,8 @@ public enum AtomType
     ENEMY,
     BOSS
 }
+
+/* Main controller for all atoms in the game */
 
 public class AtomController : MonoBehaviour, IDamagable
 {
@@ -34,15 +38,13 @@ public class AtomController : MonoBehaviour, IDamagable
         ShowText();
     }
 
-    private void LateUpdate()
+    private void LateUpdate() // Used for the health text on the screen to face the camera all the time
     {
         _healthText.transform.LookAt(_healthText.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
-    public void SetAtomType(AtomType atomType)
+    public void SetAtomType(AtomType atomType) // Sets the atom type along with all the properties
     {
-        
-
         if (atomType == AtomType.FRIENDLY)
         {
             _health = _maxHealth;
@@ -82,7 +84,7 @@ public class AtomController : MonoBehaviour, IDamagable
         return _atomType;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) // Object pool implemented here as well as collisions
     {
         if((_atomType == AtomType.ENEMY || _atomType == AtomType.BOSS) && collision.gameObject.GetComponent<AtomController>())
         {
@@ -120,20 +122,20 @@ public class AtomController : MonoBehaviour, IDamagable
         _healthText.text = _health.ToString();
     }
 
-    public void ShowText()
+    public void ShowText() // For Viewing the health text
     {
         _healthText.text = _health.ToString();
         _healthText.color = new Color(_healthText.color.r, _healthText.color.g, _healthText.color.b, 1f);
         _healthText.DOFade(0f, 1.5f).Restart();
     }
 
-    public void TakeDamage()
+    public void TakeDamage() // Function from interface which manages the damage an atom takes
     {
         _health--;
         ShowText();
         if (_health <= 0)
         {
-            if(_atomType == AtomType.FRIENDLY)
+            if(_atomType == AtomType.FRIENDLY) // Entire sequence used to switch sides
             {
                 SetAtomType(AtomType.ENEMY);
             }    

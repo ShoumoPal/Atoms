@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Script used on the level selection buttons to go to a particular level
+
 [RequireComponent (typeof(Button))]
 public class LevelOpenService : MonoBehaviour
 {

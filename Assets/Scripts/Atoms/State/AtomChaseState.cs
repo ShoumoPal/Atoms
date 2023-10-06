@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+/* Atom chase state for enemy */
+
 public class AtomChaseState : AtomBaseState
 {
     private NavMeshAgent _agent;

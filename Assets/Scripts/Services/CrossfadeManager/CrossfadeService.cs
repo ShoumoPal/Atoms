@@ -2,6 +2,8 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 
+/* Script used for the fade screen on each level */
+
 public class CrossfadeService : GenericMonoSingleton<CrossfadeService>
 {
     [SerializeField] private CanvasGroup _imageCG;

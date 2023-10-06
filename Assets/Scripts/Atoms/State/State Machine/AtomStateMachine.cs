@@ -1,11 +1,15 @@
 using UnityEngine;
 
+// Enum for atom state
+
 public enum AtomState
 {
     IDLE,
     ACTIVATED,
     CHASE
 }
+
+/* Atom state machine which manages all the states an atom can have */
 
 public class AtomStateMachine : MonoBehaviour
 {

@@ -1,6 +1,8 @@
 using DG.Tweening;
 using UnityEngine;
 
+// Script to manage the Enemy wall movement
+
 public class WallMovementController : MonoBehaviour
 {
     [SerializeField] private bool _rotateLeft;

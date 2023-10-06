@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// Enum for sound type
 
 public enum SoundType
 {
@@ -12,12 +13,16 @@ public enum SoundType
     Game_Over
 }
 
+// enum for source type
+
 public enum SourceType
 {
     FX1,
     FX2,
     BG1
 }
+
+// Class for audio source
 
 [Serializable]
 public class Source
@@ -26,6 +31,8 @@ public class Source
     public AudioSource AudioSource;
 }
 
+// Class for sounds
+
 [Serializable]
 public class Sound
 {
@@ -33,6 +40,8 @@ public class Sound
     public AudioClip Clip;
     [Range(0f, 1f)] public float Volume;
 }
+
+// Script for managing all the sounds in game
 
 public class SoundManager : GenericMonoSingleton<SoundManager>
 {

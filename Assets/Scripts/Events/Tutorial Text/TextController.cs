@@ -3,6 +3,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/* Script used by the tutorial text and how it fades using DOTween */
+
 public class TextController : MonoBehaviour
 {
     [SerializeField] private TextMeshPro _text;

@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 
+/* Script responsible for the atom checker box */
+
 public class AtomCheckBoxController : MonoBehaviour
 {
     [SerializeField] private TextMeshPro _text;
@@ -10,7 +12,7 @@ public class AtomCheckBoxController : MonoBehaviour
 
     private void Start()
     {
-        EventService.Instance.HasSatisfiedAtomCondition += HasSatisfiedCondition;
+        EventService.Instance.HasSatisfiedAtomCondition += HasSatisfiedCondition; // Subscribing to event
         _numberOfAtoms = _atomsRequired;
         hasSatisfied = false;
         DisplayNumberOfAtoms();
@@ -35,6 +37,7 @@ public class AtomCheckBoxController : MonoBehaviour
         }    
     }
 
+    // Returns the present satisfy condition
     private bool HasSatisfiedCondition()
     {
         return hasSatisfied;
@@ -52,6 +55,7 @@ public class AtomCheckBoxController : MonoBehaviour
         }
     }
 
+    // Changes the text on the checker box
     private void DisplayNumberOfAtoms()
     {
         _text.text = _numberOfAtoms.ToString();
@@ -59,12 +63,11 @@ public class AtomCheckBoxController : MonoBehaviour
 
     private void ChangeColour()
     {
-        Debug.Log("Change color called");
         gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
     }
 
     private void OnDisable()
     {
-        EventService.Instance.HasSatisfiedAtomCondition -= HasSatisfiedCondition;
+        EventService.Instance.HasSatisfiedAtomCondition -= HasSatisfiedCondition; // Unsubscribing function
     }
 }
